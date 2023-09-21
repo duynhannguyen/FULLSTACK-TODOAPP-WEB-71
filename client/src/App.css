@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.App {
+  background-color: rgb(250, 237, 198);
+  padding: 50px 0px;
+}
+
+p {
+  margin: 0px;
+  padding: 0px;
+}
+.wrapper {
+  max-width: 1000px;
+  background-color: rgb(219, 213, 125);
+  margin: 0 auto;
+  text-align: center;
+  padding: 30px 0px 20px;
+  /* width: ; */
+}
+/* .search-input{
+} */
+#search-input {
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+.btn-add {
+  height: 46px;
+  width: 100px;
+  border-radius: 10px;
+  border-style: none;
+  background-color: rgb(241, 197, 138);
+}
+/* .todoitem-warpper{
+} */
+.todolist {
+  overflow-y: auto;
+  max-height: 300px;
+}
+.todoitem {
+  text-align: left;
+  margin: 0 auto 10px;
+  padding: 15px;
+  height: 36px;
+  max-width: 500px;
+  border: 1px solid transparent;
+  background-color: bisque;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tool {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.check-box {
+  align-items: center;
+}
+#trash-can {
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+#edit {
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.check-wrapper {
+  /* position: relative; */
+  /* padding: 5px; */
+  /* margin-right: 20px; */
+}
+.trash-can-wrapper {
+  /* position: relative; */
+  /* padding: 5px; */
+  /* margin-right: 20px; */
+}
+.edit-wrapper {
+  /* position: relative; */
+  /* padding: 5px; */
+  /* margin-right: 20px; */
+}
+.check-wrapper:hover {
+  /* position: absolute; */
+  /* color: bisque; */
+  /* animation: check-box-ani 0.7s ease; */
+  animation-fill-mode: forwards;
+  /* z-index: 1; */
+  left: 0px;
+  /* transform: translate(50%, 50%); */
+}
+/* .check-box:checked + todoitem {
+  background-color: aqua;
+  opacity: 0.7;
+} */
+.trash-can-wrapper:hover {
+  /* position: absolute; */
+  /* color: bisque; */
+  /* animation: check-box-ani 0.7s ease; */
+  animation-fill-mode: forwards;
+  /* z-index: 1; */
+}
+.edit-wrapper:hover {
+  /* position: absolute; */
+  /* color: bisque; */
+  /* animation: check-box-ani 0.7s ease; */
+  animation-fill-mode: forwards;
+  /* z-index: 1; */
+}
+/* @keyframes check-box-ani {
+  0% {
+    border: 1px solid transparent;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(117, 108, 96);
+    border-radius: 50%;
+  }
+  100% {
+    border: 1px solid transparent;
+    width: 20px;
+    height: 20px;
+    background-color: rgb(117, 108, 96);
+    border-radius: 5px;
+  }
+} */
+.student-status {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 20px;
+}
+.status-all {
+  padding: 15px 5px;
+  border: 1px soild black;
+  background-color: blanchedalmond;
+  height: auto;
+  width: 100px;
+  border-radius: 20px;
+  border-style: none;
+}
+.status-all:hover {
+  opacity: 0.8;
+}
+.status-complete {
+  padding: 15px 5px;
+  border: 1px soild black;
+  background-color: blanchedalmond;
+  height: auto;
+  width: 100px;
+  border-radius: 20px;
+  border-style: none;
+}
+.status-complete:hover {
+  opacity: 0.8;
+}
+.status-uncomplete {
+  padding: 15px 5px;
+  border: 1px soild black;
+  background-color: blanchedalmond;
+  height: auto;
+  width: 100px;
+  border-radius: 20px;
+  border-style: none;
+}
+.status-uncomplete:hover {
+  opacity: 0.8;
+}
