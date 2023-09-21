@@ -24,7 +24,6 @@ export const TodoProvider = ({ children }) => {
   useEffect(() => {
     fetchData();
   }, []);
-
   const onAddNewTaskHandler = async (NewTask) => {
     const SaveNewTask = [...todoList, NewTask];
     setTodoList(SaveNewTask);
