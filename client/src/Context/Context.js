@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { FILTER_TASK_OPTION } from "../Constant/Constant.js";
-export const TodoContext = createContext();
+import todoApi from "../services/todoApi.js";
 
+export const TodoContext = createContext();
 export const useTodo = () => {
   return useContext(TodoContext);
 };
@@ -10,42 +11,35 @@ export const TodoProvider = ({ children }) => {
   const [todoList, setTodoList] = useState([]);
   const [EditTaskEle, setEditTaskEle] = useState({});
   const [filterOption, setFilterOption] = useState(FILTER_TASK_OPTION.ALL);
-
+  const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(null);
   const fetchData = async () => {
     try {
-      const responseData = await fetch("http://localhost:3001/api/v1/todo/");
-      const data = await responseData.json();
-      console.log("data", data);
-      setTodoList(data);
+      setLoading(true);
+      const responseData = await todoApi.getAll();
+      setTodoList(responseData.data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [reload]);
   const onAddNewTaskHandler = async (NewTask) => {
-    const SaveNewTask = [...todoList, NewTask];
-    setTodoList(SaveNewTask);
-    const sendRequest = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(NewTask),
-    };
-    console.log(sendRequest.body);
+    // const SaveNewTask = [...todoList, NewTask];
+    // console.log("newtask", SaveNewTask);
+    // const sendRequest = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(NewTask),
+    // };
     try {
-      const sendDataToServer = await fetch(
-        "http://localhost:3001/api/v1/todo/",
-        sendRequest
-      );
-      const responseData = await sendDataToServer.json();
-      console.log(responseData);
-      // .then((response) => response.json())
-      // .then((data) => {
-      //   console.log(data);
-      // });
+      const sendDataToServer = await todoApi.createTodo(NewTask);
+      setReload(Math.random());
     } catch (error) {
       console.error(error);
     }
@@ -53,22 +47,21 @@ export const TodoProvider = ({ children }) => {
   // delete
   const DeleteEle = async (_id) => {
     const deleteTask = todoList.find((task) => task._id === _id);
-    console.log(deleteTask);
+
     const RequestDelete = {
       method: "DELETE",
       heaers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(deleteTask),
     };
+
     try {
       const sendRequestDel = await fetch(
         `http://localhost:3001/api/v1/todo/${_id}`,
         RequestDelete
       );
-      const responseDel = await sendRequestDel.json();
-      const filterdTaskList = todoList.filter((task) => task._id !== _id);
-      setTodoList(filterdTaskList);
+      await sendRequestDel.json();
+      fetchData();
     } catch (error) {
       console.error(error);
     }
@@ -83,11 +76,10 @@ export const TodoProvider = ({ children }) => {
   };
 
   const updateTodo = async (updatedTask) => {
-    console.log(updatedTask);
     const updateTaskIndex = todoList.findIndex(
       (task) => task._id === updatedTask._id
     );
-    // console.log(updateTaskIndex);
+
     const newTodoList = [...todoList];
     newTodoList[updateTaskIndex] = updatedTask;
     console.log(newTodoList);

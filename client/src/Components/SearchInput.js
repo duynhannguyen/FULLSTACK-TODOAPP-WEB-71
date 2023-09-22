@@ -8,8 +8,6 @@ const defaultValue = {
   updateAt: "",
 };
 
-const input = new Uint8Array(12);
-
 const SearchInput = () => {
   const { onAddNewTaskHandler, EditTaskEle, updateTodo } = useTodo();
   const [NewTaskTitle, setNewTask] = useState(defaultValue);
