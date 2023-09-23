@@ -13,14 +13,16 @@ const SearchInput = () => {
   const [NewTaskTitle, setNewTask] = useState(defaultValue);
   const [mode, setMode] = useState("add");
   useEffect(() => {
-    // const hasEditTaskEleValue =
-    //   EditTaskEle.TaskTitle &&
-    //   EditTaskEle.isCompleted &&
-    //   EditTaskEle.createAt &&
-    //   EditTaskEle.updateAt;
-    if (EditTaskEle !== {}) {
+    const hasEditTaskEleValue =
+      EditTaskEle._id &&
+      EditTaskEle.TaskTitle &&
+      EditTaskEle.isCompleted &&
+      EditTaskEle.createAt &&
+      EditTaskEle.updateAt;
+    if (hasEditTaskEleValue) {
       setMode("edit");
       setNewTask({ ...EditTaskEle });
+      console.log("edit task:", NewTaskTitle);
     } else {
       setMode("add");
       setNewTask(defaultValue);
@@ -60,7 +62,7 @@ const SearchInput = () => {
         required
       ></input>
       <button type="submit" className="btn-add">
-        Add
+        {mode === "add" ? "add" : "Edit"}
       </button>
     </form>
   );

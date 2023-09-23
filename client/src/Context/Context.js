@@ -9,7 +9,7 @@ export const useTodo = () => {
 
 export const TodoProvider = ({ children }) => {
   const [todoList, setTodoList] = useState([]);
-  const [EditTaskEle, setEditTaskEle] = useState({});
+  const [EditTaskEle, setEditTaskEle] = useState("");
   const [filterOption, setFilterOption] = useState(FILTER_TASK_OPTION.ALL);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(null);
@@ -72,7 +72,7 @@ export const TodoProvider = ({ children }) => {
       (editTask) => editTask._id === _id
     );
     setEditTaskEle(filterEditTaskList);
-    // console.log(EditTaskEle);
+    console.log(EditTaskEle);
   };
 
   const updateTodo = async (updatedTask) => {
