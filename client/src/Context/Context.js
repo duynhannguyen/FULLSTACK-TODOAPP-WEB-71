@@ -28,15 +28,6 @@ export const TodoProvider = ({ children }) => {
     fetchData();
   }, [reload]);
   const onAddNewTaskHandler = async (NewTask) => {
-    // const SaveNewTask = [...todoList, NewTask];
-    // console.log("newtask", SaveNewTask);
-    // const sendRequest = {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(NewTask),
-    // };
     try {
       const sendDataToServer = await todoApi.createTodo(NewTask);
       setReload(Math.random());
@@ -46,22 +37,10 @@ export const TodoProvider = ({ children }) => {
   };
   // delete
   const DeleteEle = async (_id) => {
-    const deleteTask = todoList.find((task) => task._id === _id);
-
-    const RequestDelete = {
-      method: "DELETE",
-      heaers: {
-        "Content-Type": "application/json",
-      },
-    };
-
+    console.log(_id);
     try {
-      const sendRequestDel = await fetch(
-        `http://localhost:3001/api/v1/todo/${_id}`,
-        RequestDelete
-      );
-      await sendRequestDel.json();
-      fetchData();
+      const sendRequestDel = await todoApi.deleteTodo(_id);
+      setReload(Math.random());
     } catch (error) {
       console.error(error);
     }
@@ -72,31 +51,17 @@ export const TodoProvider = ({ children }) => {
       (editTask) => editTask._id === _id
     );
     setEditTaskEle(filterEditTaskList);
-    console.log(EditTaskEle);
   };
 
   const updateTodo = async (updatedTask) => {
-    const updateTaskIndex = todoList.findIndex(
-      (task) => task._id === updatedTask._id
-    );
-
-    const newTodoList = [...todoList];
-    newTodoList[updateTaskIndex] = updatedTask;
-    console.log(newTodoList);
-    const repuestUpdate = {
-      method: "PUT",
-      headers: {
-        Content_Type: "application/json",
-      },
-      body: JSON.stringify(updatedTask),
-    };
+    console.log(updatedTask);
     try {
-      const sendUpdateRequest = await fetch(
-        `http://localhost:3001/api/v1/todo/${updatedTask._id}`,
-        repuestUpdate
+      const sendUpdateRequest = await todoApi.updateTodo(
+        updatedTask._id,
+        updatedTask
       );
-      const responseUpdate = await sendUpdateRequest.json();
-      setTodoList(newTodoList);
+      setReload(Math.random());
+      // setTodoList(newTodoList);
     } catch (error) {
       console.error(error);
     }

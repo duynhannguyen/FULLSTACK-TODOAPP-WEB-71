@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
 // Update task
 router.put("/:id", async (req, res) => {
   const id = req.params.id;
-  const { TaskTitle, isCompleted } = req.body;
+  const { TaskTitle, isCompleted, updateAt } = req.body;
 
   const exitstingTodo = await db.todos.findOne({ _id: new ObjectId(id) });
 
@@ -64,6 +64,7 @@ router.put("/:id", async (req, res) => {
   const updateTodos = {
     ...(TaskTitle && { TaskTitle }),
     ...(isCompleted && { isCompleted }),
+    ...(updateAt && { updateAt }),
   };
 
   await db.todos.updateOne({ _id: new ObjectId(id) }, { $set: updateTodos });

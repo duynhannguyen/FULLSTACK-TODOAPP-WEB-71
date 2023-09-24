@@ -9,9 +9,13 @@ const todoApi = {
     const url = "/todo/";
     return api.post(url, NewTask);
   },
-  updateTodo: (_id) => {
+  updateTodo: (_id, updatedTask) => {
     const url = `/todo/${_id}`;
-    return api.put(url);
+    return api.put(url, updatedTask);
+  },
+  deleteTodo: (_id) => {
+    const url = `/todo/${_id}`;
+    return api.delete(url);
   },
 };
 
