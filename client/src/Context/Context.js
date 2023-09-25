@@ -73,10 +73,10 @@ export const TodoProvider = ({ children }) => {
     );
     setTodoList(updatingChecked);
   };
-  const sortOption = () => {
-    setFilterOption(filterOption);
+  const sortOption = (sort) => {
+    // setFilterOption(sort);
+    // console.log(sort);
   };
-
   const sortTaskHandler = (filterOption, todoList) => {
     let sortList = [...todoList];
     switch (+filterOption) {
@@ -108,6 +108,8 @@ export const TodoProvider = ({ children }) => {
     filterOption,
     setEditTaskEle,
     updateTodo,
+    filterOption,
+    setFilterOption,
   };
 
   return (
