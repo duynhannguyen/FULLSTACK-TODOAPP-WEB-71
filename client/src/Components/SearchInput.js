@@ -14,7 +14,7 @@ const SearchInput = () => {
   const [mode, setMode] = useState("Add");
   useEffect(() => {
     const hasEditTaskEleValue = EditTaskEle.TaskTitle && EditTaskEle._id;
-    console.log(hasEditTaskEleValue);
+
     if (hasEditTaskEleValue) {
       setMode("Edit");
       setNewTask({ ...EditTaskEle });
@@ -35,8 +35,8 @@ const SearchInput = () => {
       const NewTask = {
         TaskTitle: NewTaskTitle,
         isCompleted: false,
-        createAt: new Date(),
-        updateAt: new Date(),
+        createAt: new Date().toTimeString(),
+        updateAt: new Date().toTimeString(),
       };
       onAddNewTaskHandler(NewTask);
       setNewTask(defaultValue);

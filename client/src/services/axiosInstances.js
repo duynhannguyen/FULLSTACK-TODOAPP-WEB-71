@@ -4,7 +4,7 @@ const BASE_API_URL = "http://localhost:3001/api/v1";
 
 const api = axios.create({
   baseURL: BASE_API_URL,
-  timeout: 1000,
+  timeout: 10000,
 });
 
 export default api;

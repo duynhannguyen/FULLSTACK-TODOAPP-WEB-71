@@ -63,7 +63,8 @@ router.put("/:id", async (req, res) => {
 
   const updateTodos = {
     ...(TaskTitle && { TaskTitle }),
-    ...(isCompleted && { isCompleted }),
+    // ...(isCompleted && { isCompleted }),
+    isCompleted,
     ...(updateAt && { updateAt }),
   };
 

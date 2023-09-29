@@ -1,7 +1,7 @@
 import { FILTER_TASK_OPTION } from "../Constant/Constant";
 import { useTodo } from "../Context/Context.js";
 const TaskFilter = (props) => {
-  const { sortOption } = useTodo();
+  const { sortOption, setFilterOption } = useTodo();
   return (
     <div className="student-status">
       <button
@@ -16,7 +16,12 @@ const TaskFilter = (props) => {
       >
         Complete
       </button>
-      <button className="status-uncomplete">Uncomplete</button>
+      <button
+        className="status-uncomplete"
+        onClick={() => sortOption(FILTER_TASK_OPTION.UNCOMPLETE)}
+      >
+        Uncomplete
+      </button>
     </div>
   );
 };

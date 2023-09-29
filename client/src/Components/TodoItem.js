@@ -1,5 +1,3 @@
-import { useState } from "react";
-import TodolList from "./TodoList";
 const TodoItem = (props) => {
   const { _id, TaskTitle, isCompleted, DeleteId, EditId, onChecked } =
     props || {};

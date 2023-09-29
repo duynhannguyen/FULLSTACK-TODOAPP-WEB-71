@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import TodolList from "../Components/TodoList.js";
 import { FILTER_TASK_OPTION } from "../Constant/Constant.js";
 import todoApi from "../services/todoApi.js";
 
@@ -13,6 +14,7 @@ export const TodoProvider = ({ children }) => {
   const [filterOption, setFilterOption] = useState(FILTER_TASK_OPTION.ALL);
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(null);
+  const [filter, setfilter] = useState(false);
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -26,25 +28,34 @@ export const TodoProvider = ({ children }) => {
   };
   useEffect(() => {
     fetchData();
+    if (filter) {
+      sortTaskHandler(filterOption).then((sortList) => {
+        setTodoList(sortList);
+      });
+    }
   }, [reload]);
   const onAddNewTaskHandler = async (NewTask) => {
     try {
+      setLoading(false);
       const sendDataToServer = await todoApi.createTodo(NewTask);
       setReload(Math.random());
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(true);
     }
   };
   // delete
   const DeleteEle = async (_id) => {
-    console.log(_id);
     try {
+      setLoading(false);
       const sendRequestDel = await todoApi.deleteTodo(_id);
       setReload(Math.random());
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(true);
     }
-    // console.log(_id);
   };
   const EditEle = (_id) => {
     const filterEditTaskList = todoList.find(
@@ -56,46 +67,67 @@ export const TodoProvider = ({ children }) => {
   const updateTodo = async (updatedTask) => {
     console.log(updatedTask);
     try {
+      setLoading(false);
       const sendUpdateRequest = await todoApi.updateTodo(
         updatedTask._id,
         updatedTask
       );
       setReload(Math.random());
-      // setTodoList(newTodoList);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(true);
     }
   };
 
-  const onChecked = (_id) => {
-    const updatingChecked = todoList.map((task) =>
-      task._id === _id ? { ...task, isCompleted: !task.isCompleted } : task
-    );
-    setTodoList(updatingChecked);
-  };
-  const sortOption = () => {
-    setFilterOption(filterOption);
+  const onChecked = async (_id) => {
+    const findTask = todoList.find((task) => task._id === _id);
+
+    const updateStatusTask = {
+      ...findTask,
+      isCompleted: !findTask.isCompleted,
+    };
+    const updateStatus = await todoApi.updateTodo(_id, updateStatusTask);
+    setReload(Math.random());
   };
 
-  const sortTaskHandler = (filterOption, todoList) => {
-    let sortList = [...todoList];
+  const sortOption = (option) => {
+    setFilterOption(option);
+    setfilter(true);
+    setReload(Math.random());
+  };
+
+  const sortTaskHandler = async (filterOption) => {
+    const getData = await todoApi.getAll();
+    let sortList = getData.data;
     switch (+filterOption) {
       case FILTER_TASK_OPTION.COMPLETE:
-        sortList = sortList.sort(
-          (task) => (task.isCompleted = !task.isCompleted)
+        sortList = sortList.filter(
+          (task) => (task.isCompleted = task.isCompleted)
         );
-
-        return sortList;
+        break;
+      case FILTER_TASK_OPTION.UNCOMPLETE:
+        sortList = sortList.filter((task) => !task.isCompleted);
+        break;
       case FILTER_TASK_OPTION.ALL:
         sortList = sortList.sort(
           (task) => (task.isCompleted = task.isCompleted)
         );
-        return sortList;
+        break;
     }
+    return sortList;
   };
-  const updatingFilter = sortTaskHandler(filterOption, todoList);
-  //   console.log(updatingFilter);
 
+  // const filterData = () => {
+  //   sortTaskHandler(filterOption).then((sortList) => {
+  //     setTodoList(sortList);
+  //   });
+  // };
+  // console.log(filterData());
+  // if (filterOption || !filterOption) {
+  //   filterData();
+  // }
+  // console.log(todoList);
   const value = {
     onAddNewTaskHandler,
     DeleteEle,
@@ -106,6 +138,7 @@ export const TodoProvider = ({ children }) => {
     todoList,
     EditTaskEle,
     filterOption,
+    setFilterOption,
     setEditTaskEle,
     updateTodo,
   };

@@ -3,12 +3,13 @@ import { useTodo } from "../Context/Context.js";
 import TodoItem from "./TodoItem";
 const TodolList = (props) => {
   const { todoList, DeleteEle, EditEle, onChecked } = useTodo();
-  // const { data = [], DeleteId, EditId, onChecked } = props;
+  console.log(todoList);
   const data = [];
   let TaskList =
     data &&
     todoList.map((todo) => (
       <TodoItem
+        key={todo._id}
         {...todo}
         DeleteId={DeleteEle}
         EditId={EditEle}
@@ -16,6 +17,10 @@ const TodolList = (props) => {
       />
     ));
 
-  return <div className="todolist">{TaskList}</div>;
+  return (
+    <div className="todolist">
+      {todoList !== [] ? TaskList : <p>Let add new task</p>}
+    </div>
+  );
 };
 export default TodolList;
