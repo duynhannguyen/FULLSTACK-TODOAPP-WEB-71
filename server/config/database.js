@@ -1,7 +1,7 @@
 import { MongoClient } from "mongodb";
-
-const MONGOURL =
-  "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.6";
+import "dotenv/config";
+const MONGOURL = process.env.MONGO_URI;
+// "mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.10.6";
 const DATABASE = "todolist-app";
 const db = {};
 

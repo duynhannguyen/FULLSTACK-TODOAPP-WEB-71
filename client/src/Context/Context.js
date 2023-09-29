@@ -141,6 +141,8 @@ export const TodoProvider = ({ children }) => {
     setFilterOption,
     setEditTaskEle,
     updateTodo,
+    filterOption,
+    setFilterOption,
   };
 
   return (
