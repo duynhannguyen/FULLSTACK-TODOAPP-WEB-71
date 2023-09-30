@@ -110,11 +110,10 @@ export const TodoProvider = ({ children }) => {
         sortList = sortList.filter((task) => !task.isCompleted);
         break;
       case FILTER_TASK_OPTION.ALL:
-        sortList = sortList.sort(
-          (task) => (task.isCompleted = task.isCompleted)
-        );
+        sortList = sortList.filter((task) => task);
         break;
     }
+    console.log(sortList);
     return sortList;
   };
 

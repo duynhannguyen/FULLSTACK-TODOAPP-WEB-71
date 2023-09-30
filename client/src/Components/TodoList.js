@@ -3,7 +3,6 @@ import { useTodo } from "../Context/Context.js";
 import TodoItem from "./TodoItem";
 const TodolList = (props) => {
   const { todoList, DeleteEle, EditEle, onChecked } = useTodo();
-  console.log(todoList);
   const data = [];
   let TaskList =
     data &&

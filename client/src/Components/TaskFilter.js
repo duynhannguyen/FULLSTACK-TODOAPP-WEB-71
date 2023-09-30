@@ -6,13 +6,13 @@ const TaskFilter = (props) => {
     <div className="student-status">
       <button
         className="status-all"
-        onClick={() => setFilterOption(FILTER_TASK_OPTION.ALL)}
+        onClick={() => sortOption(FILTER_TASK_OPTION.ALL)}
       >
         All
       </button>
       <button
         className="status-complete"
-        onClick={() => setFilterOption(FILTER_TASK_OPTION.COMPLETE)}
+        onClick={() => sortOption(FILTER_TASK_OPTION.COMPLETE)}
       >
         Complete
       </button>
