@@ -1,3 +1,4 @@
+// import { db } from "../config/database.js";
 import { db } from "../config/database.js";
 import { ObjectId } from "mongodb";
 
@@ -24,16 +25,16 @@ const getById = async (req, res) => {
 };
 
 const createPost = async (req, res) => {
-  const { TaskTitle, isCompleted, createAt, updateAt } = req.body;
+  const { taskTitle, isCompleted, createAt, updateAt } = req.body;
 
-  if (!TaskTitle) {
+  if (!taskTitle) {
     return res.status(400).json({
       message: "Missing required key",
     });
   }
 
   const newTodo = {
-    TaskTitle,
+    taskTitle,
     isCompleted,
     createAt,
     updateAt,
@@ -48,7 +49,7 @@ const createPost = async (req, res) => {
 
 const updatePost = async (req, res) => {
   const id = req.params.id;
-  const { TaskTitle, isCompleted, updateAt } = req.body;
+  const { taskTitle, isCompleted, updateAt } = req.body;
 
   const exitstingTodo = await db.todos.findOne({ _id: new ObjectId(id) });
 
@@ -59,7 +60,7 @@ const updatePost = async (req, res) => {
   }
 
   const updateTodos = {
-    ...(TaskTitle && { TaskTitle }),
+    ...(taskTitle && { taskTitle }),
     // ...(isCompleted && { isCompleted }),
     isCompleted,
     ...(updateAt && { updateAt }),

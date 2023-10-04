@@ -1,10 +1,10 @@
 const TodoItem = (props) => {
-  const { _id, TaskTitle, isCompleted, DeleteId, EditId, onChecked } =
+  const { _id, taskTitle, isCompleted, DeleteId, EditId, onChecked } =
     props || {};
 
   return (
     <div id={_id} className="todoitem">
-      {TaskTitle}
+      {taskTitle}
       <p className="tool">
         <div
           className={`${

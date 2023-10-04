@@ -1,6 +1,6 @@
 import { useTodo } from "../Context/Context.js";
 import TodoItem from "./TodoItem";
-const TodolList = () => {
+const TodoList = () => {
   const { todoList, onDeleteHandler, onEditHandler, onChecked } = useTodo();
   const data = [];
   let taskList =
@@ -21,4 +21,4 @@ const TodolList = () => {
     </div>
   );
 };
-export default TodolList;
+export default TodoList;

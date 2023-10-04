@@ -1,9 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-.App {
+.Home {
   background-color: rgb(250, 237, 198);
   padding: 50px 0px;
 }

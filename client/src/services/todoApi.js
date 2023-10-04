@@ -5,9 +5,9 @@ const todoApi = {
     const url = `/todo?limit=${limit}&page=${page}`;
     return api.get(url);
   },
-  createTodo: (NewTask) => {
+  createTodo: (newTask) => {
     const url = "/todo/";
-    return api.post(url, NewTask);
+    return api.post(url, newTask);
   },
   updateTodo: (_id, updatedTask) => {
     const url = `/todo/${_id}`;

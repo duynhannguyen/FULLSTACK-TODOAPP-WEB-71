@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useTodo } from "../Context/Context.js";
 
 const defaultValue = {
-  TaskTitle: "",
+  taskTitle: "",
   isCompleted: "",
   createAt: "",
   updateAt: "",
@@ -11,44 +11,44 @@ const defaultValue = {
 const SearchInput = () => {
   const {
     onAddNewTaskHandler,
-    EditTaskEle,
+    editTaskEle,
     updateTodo,
     mode,
     setMode,
     todoMode,
   } = useTodo();
-  const [NewTaskTitle, setNewTask] = useState(defaultValue);
-
+  const [newTaskTitle, setNewTask] = useState(defaultValue);
   useEffect(() => {
-    const hasEditTaskEleValue = EditTaskEle.TaskTitle && EditTaskEle._id;
+    const hasEditTaskEleValue = editTaskEle.taskTitle && editTaskEle._id;
 
     if (hasEditTaskEleValue) {
       setMode(todoMode.edit);
-      setNewTask({ ...EditTaskEle });
+      console.log("editTask", editTaskEle);
+      setNewTask(editTaskEle);
+      console.log("newTask", newTaskTitle);
     } else {
       setMode(todoMode.add);
       setNewTask(defaultValue);
     }
-  }, [EditTaskEle]);
-
+  }, [editTaskEle]);
   const onChangeHandler = (e) => {
     setNewTask(e.target.value);
   };
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     if (mode === todoMode.add) {
-      const NewTask = {
-        TaskTitle: NewTaskTitle,
+      const newTask = {
+        taskTitle: newTaskTitle,
         isCompleted: false,
         createAt: new Date().toTimeString(),
         updateAt: new Date().toTimeString(),
       };
-      onAddNewTaskHandler(NewTask);
+      await onAddNewTaskHandler(newTask);
       setNewTask(defaultValue);
     } else {
-      const updatedTask = { ...EditTaskEle, TaskTitle: NewTaskTitle };
-      updateTodo(updatedTask);
+      const updatedTask = { ...editTaskEle, taskTitle: newTaskTitle };
+      await updateTodo(updatedTask);
       setMode(todoMode.add);
       setNewTask(defaultValue);
     }
@@ -60,7 +60,7 @@ const SearchInput = () => {
         type="text"
         placeholder="New task"
         size="70"
-        value={NewTaskTitle.TaskTitle}
+        value={newTaskTitle.taskTitle}
         onChange={onChangeHandler}
         required
       ></input>
