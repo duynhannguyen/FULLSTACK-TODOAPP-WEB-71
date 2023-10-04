@@ -9,18 +9,24 @@ const defaultValue = {
 };
 
 const SearchInput = () => {
-  const { onAddNewTaskHandler, EditTaskEle, updateTodo } = useTodo();
+  const {
+    onAddNewTaskHandler,
+    EditTaskEle,
+    updateTodo,
+    mode,
+    setMode,
+    todoMode,
+  } = useTodo();
   const [NewTaskTitle, setNewTask] = useState(defaultValue);
-  const [mode, setMode] = useState("Add");
+
   useEffect(() => {
     const hasEditTaskEleValue = EditTaskEle.TaskTitle && EditTaskEle._id;
 
     if (hasEditTaskEleValue) {
-      setMode("Edit");
+      setMode(todoMode.edit);
       setNewTask({ ...EditTaskEle });
-      console.log("edit task:", NewTaskTitle);
     } else {
-      setMode("Add");
+      setMode(todoMode.add);
       setNewTask(defaultValue);
     }
   }, [EditTaskEle]);
@@ -31,7 +37,7 @@ const SearchInput = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    if (mode === "Add") {
+    if (mode === todoMode.add) {
       const NewTask = {
         TaskTitle: NewTaskTitle,
         isCompleted: false,
@@ -43,7 +49,7 @@ const SearchInput = () => {
     } else {
       const updatedTask = { ...EditTaskEle, TaskTitle: NewTaskTitle };
       updateTodo(updatedTask);
-      setMode("add");
+      setMode(todoMode.add);
       setNewTask(defaultValue);
     }
   };
@@ -59,7 +65,7 @@ const SearchInput = () => {
         required
       ></input>
       <button type="submit" className="btn-add">
-        {mode === "Edit" ? "Edit" : "Add"}
+        {mode === todoMode.edit ? "Update" : "Add"}
       </button>
     </form>
   );

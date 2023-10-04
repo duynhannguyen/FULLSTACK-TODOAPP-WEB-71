@@ -3,6 +3,10 @@ import TodolList from "../Components/TodoList.js";
 import { FILTER_TASK_OPTION } from "../Constant/Constant.js";
 import todoApi from "../services/todoApi.js";
 
+const todoMode = {
+  add: "Add",
+  edit: "Edit",
+};
 export const TodoContext = createContext();
 export const useTodo = () => {
   return useContext(TodoContext);
@@ -15,10 +19,13 @@ export const TodoProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(null);
   const [filter, setfilter] = useState(false);
+
+  const [mode, setMode] = useState(todoMode.add);
   const fetchData = async () => {
     try {
       setLoading(true);
       const responseData = await todoApi.getAll();
+      console.log(responseData.data);
       setTodoList(responseData.data);
     } catch (error) {
       console.error(error);
@@ -46,7 +53,10 @@ export const TodoProvider = ({ children }) => {
     }
   };
   // delete
-  const DeleteEle = async (_id) => {
+  const onDeleteHandler = async (_id) => {
+    if (mode === todoMode.edit) {
+      return;
+    }
     try {
       setLoading(false);
       const sendRequestDel = await todoApi.deleteTodo(_id);
@@ -57,7 +67,7 @@ export const TodoProvider = ({ children }) => {
       setLoading(true);
     }
   };
-  const EditEle = (_id) => {
+  const onEditHandler = (_id) => {
     const filterEditTaskList = todoList.find(
       (editTask) => editTask._id === _id
     );
@@ -129,8 +139,8 @@ export const TodoProvider = ({ children }) => {
   // console.log(todoList);
   const value = {
     onAddNewTaskHandler,
-    DeleteEle,
-    EditEle,
+    onDeleteHandler,
+    onEditHandler,
     onChecked,
     sortTaskHandler,
     sortOption,
@@ -142,6 +152,9 @@ export const TodoProvider = ({ children }) => {
     updateTodo,
     filterOption,
     setFilterOption,
+    mode,
+    setMode,
+    todoMode,
   };
 
   return (
