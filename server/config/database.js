@@ -12,6 +12,7 @@ const connectToDatabase = async () => {
     console.log("Database connected successfully");
     const database = mongoClient.db(DATABASE);
     db.todos = database.collection("todoData");
+    db.users = database.collection("users");
   } catch (error) {
     console.error("Connect to DB failed:", error);
     process.exit(1);
