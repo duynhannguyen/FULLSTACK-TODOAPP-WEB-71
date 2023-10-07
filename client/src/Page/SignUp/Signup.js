@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../../Components/Button/Button.js";
 import FieldTextInput from "../../Components/FieldTextInput/FieldTextInput";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+
+import AuthApi from "../../services/AuthAPI.js";
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -12,7 +18,12 @@ const Signup = () => {
       gender: "male",
     },
     onSubmit: async (values) => {
-      console.log(values);
+      try {
+        setLoading(true);
+        setError(null);
+        await AuthApi.signUp(values);
+        navigate("/login");
+      } catch (error) {}
     },
   });
   const { handleSubmit, handleChange } = formik;

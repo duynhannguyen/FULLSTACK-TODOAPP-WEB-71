@@ -10,3 +10,5 @@ const AuthApi = {
     return api.post(url, body);
   },
 };
+
+export default AuthApi;
