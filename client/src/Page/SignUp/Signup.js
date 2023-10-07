@@ -23,7 +23,11 @@ const Signup = () => {
         setError(null);
         await AuthApi.signUp(values);
         navigate("/login");
-      } catch (error) {}
+      } catch (error) {
+        console.log("error", error);
+        setLoading(false);
+        setError(error.response.data?.message);
+      }
     },
   });
   const { handleSubmit, handleChange } = formik;
@@ -36,6 +40,7 @@ const Signup = () => {
         >
           <h2 className="text-2xl text-center mb-6">Register account</h2>
           <div className="flex flex-col gap-4">
+            {error && <p className="text-red-500 font-bold"> {error} </p>}
             <FieldTextInput
               label="Fullname"
               id="fullname"
@@ -62,7 +67,9 @@ const Signup = () => {
               handleChange={handleChange}
             />
           </div>
-          <Button type="submit">SignUp</Button>
+          <Button type="submit" isLoading={loading}>
+            SignUp
+          </Button>
         </form>
       </div>
     </div>
