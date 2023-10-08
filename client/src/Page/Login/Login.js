@@ -7,8 +7,11 @@ import AuthApi from "../../services/AuthAPI.js";
 import { useNavigate } from "react-router-dom";
 import CustomErrorMessage from "../../Components/CustomErrorMessage/CustomErrorMessage.js";
 import { TOKEN_TYPES } from "../../Constant/Constant.js";
+import { useDispatch } from "react-redux";
+import { login } from "../../Redux/auth/AuthSlice.js";
 const Login = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const loginSchema = yup.object().shape({
@@ -40,6 +43,12 @@ const Login = () => {
         const accessToken = response.data.accessToken;
         if (accessToken) {
           localStorage.setItem(TOKEN_TYPES.ACCESS_TOKEN, accessToken);
+          const currentUserResponse = await AuthApi.fetchCurrentUser();
+          const currentUserData = currentUserResponse.data;
+          const payload = {
+            currentUser: currentUserData,
+          };
+          dispatch(login(payload));
         }
         navigate("/");
       } catch (error) {

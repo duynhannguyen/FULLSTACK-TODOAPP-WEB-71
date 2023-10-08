@@ -9,6 +9,7 @@ const authMiddleWare = (req, res, next) => {
       });
     }
     const decoded = jwt.verify(accessToken, process.env.SECRET_KEY);
+    req.user = decoded;
     next();
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {

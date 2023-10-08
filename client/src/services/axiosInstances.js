@@ -12,8 +12,8 @@ api.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
   if (accessToken) {
     config.headers["x-access-token"] = accessToken;
-    return config;
   }
+  return config;
 });
 
 export default api;
