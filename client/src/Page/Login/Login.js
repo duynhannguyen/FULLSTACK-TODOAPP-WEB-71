@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FieldTextInput from "../../Components/FieldTextInput/FieldTextInput.js";
 import Button from "../../Components/Button/Button.js";
 import { useFormik } from "formik";
@@ -7,13 +7,15 @@ import AuthApi from "../../services/AuthAPI.js";
 import { useNavigate } from "react-router-dom";
 import CustomErrorMessage from "../../Components/CustomErrorMessage/CustomErrorMessage.js";
 import { TOKEN_TYPES } from "../../Constant/Constant.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../Redux/auth/AuthSlice.js";
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const loginSchema = yup.object().shape({
     email: yup
       .string()
@@ -61,8 +63,11 @@ const Login = () => {
     validationSchema: loginSchema,
   });
 
-  // console.log(error);
   const { handleSubmit, handleChange, errors } = formik;
+  if (isAuthenticated) {
+    return navigate("/");
+  }
+
   return (
     <div className="  flex justify-center items-center mt-10">
       <div className="w-full md:max-w-md">

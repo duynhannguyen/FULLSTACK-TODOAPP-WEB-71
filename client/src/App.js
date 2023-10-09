@@ -8,11 +8,13 @@ import { useEffect } from "react";
 import AuthApi from "./services/AuthAPI.js";
 import { useDispatch } from "react-redux";
 import { login } from "./Redux/auth/AuthSlice.js";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
+import { TOKEN_TYPES } from "./Constant/Constant.js";
 function App() {
   const dispatch = useDispatch();
 
   const fetchCurrentUser = async () => {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = localStorage.getItem(TOKEN_TYPES.ACCESS_TOKEN);
     if (accessToken) {
       try {
         const currentUser = await AuthApi.fetchCurrentUser();
@@ -34,7 +36,7 @@ function App() {
     <TodoProvider>
       <Routes>
         <Route path="/" element={<SiteLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<ProtectedRoute component={Home} />} />
           <Route path="login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
