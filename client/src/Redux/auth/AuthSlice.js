@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TOKEN_TYPES } from "../../Constant/Constant";
 const initialState = {
   isAuthenticated: false,
   error: null,
@@ -14,9 +15,14 @@ const authSlice = createSlice({
       state.currentUser = payload.currentUser;
       state.isAuthenticated = true;
     },
+    logout: (state) => {
+      localStorage.removeItem(TOKEN_TYPES.ACCESS_TOKEN);
+      state.isAuthenticated = false;
+      state.currentUser = {};
+    },
   },
 });
 
-export const { login } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 export default authSlice.reducer;

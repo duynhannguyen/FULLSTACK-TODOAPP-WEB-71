@@ -1,8 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../Redux/auth/AuthSlice.js";
+
 const Header = () => {
   const { isAuthenticated, currentUser } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const onLogoutHandler = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   const publicNavs = (
     <>
       <li>
@@ -21,7 +30,12 @@ const Header = () => {
   const authenticatedNavs = (
     <>
       <li>
-        <p className="text-gray-500 hover:text-gray-600">Log out</p>
+        <p
+          className="text-gray-500 hover:text-gray-600 cursor: pointer"
+          onClick={onLogoutHandler}
+        >
+          Log out
+        </p>
       </li>
       <li>
         <p className="text-gray-500 hover:text-gray-600">

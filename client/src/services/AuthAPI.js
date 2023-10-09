@@ -14,5 +14,4 @@ const AuthApi = {
     return api.get(url);
   },
 };
-
 export default AuthApi;
