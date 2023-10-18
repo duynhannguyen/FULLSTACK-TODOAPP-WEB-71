@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { login } from "./Redux/auth/AuthSlice.js";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute.js";
 import { TOKEN_TYPES } from "./Constant/Constant.js";
+import Profile from "./Page/Profile/Profile.js";
 function App() {
   const dispatch = useDispatch();
 
@@ -37,8 +38,12 @@ function App() {
       <Routes>
         <Route path="/" element={<SiteLayout />}>
           <Route index element={<ProtectedRoute component={Home} />} />
+          <Route
+            path="profile"
+            element={<ProtectedRoute component={Profile} />}
+          />
           <Route path="login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="signup" element={<Signup />} />
         </Route>
       </Routes>
     </TodoProvider>

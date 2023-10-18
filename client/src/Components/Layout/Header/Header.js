@@ -10,7 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const onLogoutHandler = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/login");
   };
   const publicNavs = (
     <>
@@ -39,7 +39,7 @@ const Header = () => {
       </li>
       <li>
         <p className="text-gray-500 hover:text-gray-600">
-          {currentUser.fullname}
+          <Link to={"/profile"}> Hello {currentUser.fullname} </Link>
         </p>
       </li>
     </>
